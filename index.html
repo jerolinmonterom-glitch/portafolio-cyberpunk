@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jerolin Montero | Portafolio Cyberpunk IA</title>
+  <meta name="description" content="Portafolio profesional de Jerolin Montero. Matrícula: 2024-8034. Desarrollo Web, Aplicaciones e Inteligencia Artificial con estética Cyberpunk.">
+  <meta name="keywords" content="Jerolin Montero, 2024-8034, Cyberpunk, Developer, Software Engineer, Portfolio, HTML5, CSS3, JavaScript, AI">
+  <meta name="author" content="Jerolin Montero">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #030712;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --neon-cyan: #00f0ff;
+      --neon-pink: #ff007f;
+      --neon-green: #00ff66;
+      --border-color: rgba(0, 240, 255, 0.3);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.15);
+      --font-cyber: 'Orbitron', sans-serif;
+      --font-code: 'Share Tech Mono', monospace;
+    }
+    [data-bs-theme="light"] {
+      --bg-color: #f0f4f8;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --neon-cyan: #007799;
+      --neon-pink: #cc0066;
+      --neon-green: #008833;
+      --border-color: rgba(0, 119, 153, 0.4);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-code);
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    h1, h2, h3, h4, h5, .nav-link, .cyber-font {
+      font-family: var(--font-cyber);
+      letter-spacing: 1px;
+    }
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--glass-shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 12px 40px rgba(0, 240, 255, 0.3);
+    }
+    .btn-cyber-primary {
+      background: transparent;
+      color: var(--neon-cyan);
+      border: 1px solid var(--neon-cyan);
+      font-family: var(--font-cyber);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .btn-cyber-primary:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-cyan);
+    }
+    .btn-cyber-secondary {
+      background: transparent;
+      color: var(--neon-pink);
+      border: 1px solid var(--neon-pink);
+      font-family: var(--font-cyber);
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-cyber-secondary:hover {
+      background: var(--neon-pink);
+      color: #fff;
+      box-shadow: 0 0 20px var(--neon-pink);
+    }
+    .profile-glow-container {
+      position: relative;
+      display: inline-block;
+    }
+    .profile-glow-container::before {
+      content: '';
+      position: absolute;
+      top: -5px; left: -5px; right: -5px; bottom: -5px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-green));
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(15px);
+      animation: neonGlow 6s linear infinite;
+    }
+    @keyframes neonGlow {
+      0% { filter: blur(15px) hue-rotate(0deg); }
+      100% { filter: blur(15px) hue-rotate(360deg); }
+    }
+    .profile-img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--neon-cyan);
+    }
+    .social-icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      background: var(--card-bg);
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+    .social-icon-btn:hover {
+      color: #000;
+      background: var(--neon-cyan);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px var(--neon-cyan);
+      transform: translateY(-3px);
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 20px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60%;
+      height: 3px;
+      background: var(--neon-pink);
+      box-shadow: 0 0 10px var(--neon-pink);
+    }
+    .tech-card {
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+    .tech-card i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--neon-cyan);
+    }
+    .ratio-16x9 {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix-canvas"></canvas>
+
+  <nav class="navbar navbar-expand-lg sticky-top glass-card my-2 mx-3 px-3">
+    <div class="container-fluid">
+      <a class="navbar-brand text-info fw-bold d-flex align-items-center gap-2" href="#">
+        <i class="bi bi-cpu fs-3"></i>
+        <span>JM_DEV//</span>
+      </a>
+      <button class="navbar-toggler text-light border-info" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto me-3 align-items-center gap-2">
+          <li class="nav-item"><a class="nav-link text-light" href="#hero">INICIO</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#tech">STACK</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#projects">PROYECTOS</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#experience">EXPERIENCIA</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#videos">VIDEOS</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#contact">CONTACTO</a></li>
+        </ul>
+        <button id="theme-toggle" class="btn btn-outline-info rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;" aria-label="Cambiar Tema">
+          <i class="bi bi-sun-fill" id="theme-icon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" class="py-5 my-4">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-5 text-center">
+          <div class="profile-glow-container">
+            <!-- AQUÍ SE CARGA TU FOTO CORRECTAMENTE -->
+            <img src="mi-foto.jpg" alt="Jerolin Montero" class="profile-img">
+          </div>
+        </div>
+        <div class="col-lg-7 text-center text-lg-start">
+          <span class="badge bg-outline-info border border-info text-info mb-2 px-3 py-2">ESTUDIANTE DE INGENIERÍA // MATRÍCULA: 2024-8034</span>
+          <h1 class="display-3 fw-bold text-uppercase text-gradient mb-3">Jerolin Montero</h1>
+          <h3 class="h4 text-info mb-3">&lt; Desarrollador Full-Stack &amp; Especialista IA /&gt;</h3>
+          <p class="lead text-muted mb-4">
+            Apasionado por la innovación tecnológica, arquitecturas web de alto rendimiento y soluciones potenciadas con Inteligencia Artificial. Enfocado en la creación de interfaces interactivas y sistemas escalables con estética futurista.
+          </p>
+
+          <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-4">
+            <a href="https://www.linkedin.com/in/jerolin-montero-ab7452420/?isSelfProfile=true" target="_blank" class="social-icon-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.youtube.com/@JerolinMontero-g9r" target="_blank" class="social-icon-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
+            <a href="https://github.com/jerolinmonterom-glitch" target="_blank" class="social-icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
+            <a href="https://wa.me/18498620122" target="_blank" class="social-icon-btn" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.instagram.com/stei_mm?vrfl=ZThzMHNtcHJxNmEy&utm_source=qr" target="_blank" class="social-icon-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+
+          <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+            <a href="#projects" class="btn btn-cyber-primary px-4 py-2">Ver Proyectos</a>
+            <a href="#contact" class="btn btn-cyber-secondary px-4 py-2">Contactar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech" class="py-5">
+    <div class="container">
+      <h2 class="section-title h3">Tech Stack &amp; Herramientas</h2>
+      <div class="row g-4 mt-2">
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-filetype-html"></i>
+            <h5 class="h6 mt-2 mb-0">HTML5</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-filetype-css"></i>
+            <h5 class="h6 mt-2 mb-0">CSS3</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-filetype-js"></i>
+            <h5 class="h6 mt-2 mb-0">JavaScript</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-bootstrap-fill"></i>
+            <h5 class="h6 mt-2 mb-0">Bootstrap 5</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-robot"></i>
+            <h5 class="h6 mt-2 mb-0">IA Prompting</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="glass-card tech-card">
+            <i class="bi bi-git"></i>
+            <h5 class="h6 mt-2 mb-0">Git &amp; GitHub</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-5">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <h2 class="section-title h3 mb-0">Proyectos Destacados</h2>
+        <div class="d-flex flex-wrap gap-2" id="filter-buttons">
+          <button class="filter-btn active" data-filter="all">TODOS</button>
+          <button class="filter-btn" data-filter="web">WEB</button>
+          <button class="filter-btn" data-filter="app">APP</button>
+          <button class="filter-btn" data-filter="design">DISEÑO</button>
+        </div>
+      </div>
+
+      <div class="row g-4" id="projects-grid">
+        <div class="col-md-6 col-lg-4 project-item" data-category="web">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Cyber Shield">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-info text-dark align-self-start mb-2">WEB</span>
+              <h5 class="card-title text-info">Cyber Shield Dashboard</h5>
+              <p class="card-text text-muted flex-grow-1">Panel de monitoreo de ciberseguridad en tiempo real desarrollado con JavaScript vanilla y Bootstrap 5.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="app">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="AI Agent">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-danger text-light align-self-start mb-2">APP</span>
+              <h5 class="card-title text-info">Neural Chat Assistant</h5>
+              <p class="card-text text-muted flex-grow-1">Aplicación móvil web progresiva para interacciones conversacionales asistidas por Inteligencia Artificial.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="design">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Neon UI">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-warning text-dark align-self-start mb-2">DISEÑO</span>
+              <h5 class="card-title text-info">Neon Cyber UI Kit</h5>
+              <p class="card-text text-muted flex-grow-1">Sistema de diseño futurista completo enfocado en accesibilidad, patrones oscuros y contrastes WCAG.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Ver Asset</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="web">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Matrix Terminal">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-info text-dark align-self-start mb-2">WEB</span>
+              <h5 class="card-title text-info">Matrix Terminal Simulator</h5>
+              <p class="card-text text-muted flex-grow-1">Emulador de consola de comandos interactiva con ejecución de scripts personalizados.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="app">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Crypto Tracker">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-danger text-light align-self-start mb-2">APP</span>
+              <h5 class="card-title text-info">Crypto Pulse Tracker</h5>
+              <p class="card-text text-muted flex-grow-1">Plataforma de seguimiento de criptoactivos en vivo conectada con APIs financieras públicas.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="design">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="3D Neon">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-warning text-dark align-self-start mb-2">DISEÑO</span>
+              <h5 class="card-title text-info">Hologram Branding</h5>
+              <p class="card-text text-muted flex-grow-1">Identidad visual y renders 3D conceptuales para startup de inteligencia artificial.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Ver Asset</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="web">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="IoT Control">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-info text-dark align-self-start mb-2">WEB</span>
+              <h5 class="card-title text-info">IoT Smart Home Hub</h5>
+              <p class="card-text text-muted flex-grow-1">Interfaz web de control domótico para dispositivos inteligentes del hogar.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="app">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Cyber Arcade">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-danger text-light align-self-start mb-2">APP</span>
+              <h5 class="card-title text-info">Retro Cyber Arcade</h5>
+              <p class="card-text text-muted flex-grow-1">Colección de mini-juegos retro interactivos desarrollados en HTML5 Canvas e IA.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Demo en Vivo</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 project-item" data-category="design">
+          <div class="glass-card h-100 overflow-hidden d-flex flex-column">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Glitch Art">
+            <div class="card-body p-4 d-flex flex-column">
+              <span class="badge bg-warning text-dark align-self-start mb-2">DISEÑO</span>
+              <h5 class="card-title text-info">Glitch FX Library</h5>
+              <p class="card-text text-muted flex-grow-1">Librería de efectos CSS de distorsión digital "glitch" para componentes web vanguardistas.</p>
+              <a href="#" class="btn btn-sm btn-cyber-primary mt-3">Ver Asset</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="py-5">
+    <div class="container">
+      <h2 class="section-title h3">Experiencia Laboral</h2>
+      <div class="row g-4 mt-2 justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="glass-card p-4 h-100 border-start border-3 border-info">
+            <span class="text-info fw-bold">2025 - PRESENTE</span>
+            <h4 class="h5 mt-2 text-light">Desarrollador Frontend Freelance</h4>
+            <p class="text-muted small">Sosa Ebanistería &amp; Proyectos Independientes</p>
+            <p class="card-text text-muted">Diseño e implementación de landing pages optimizadas, portales informativos y gestión gráfica corporativa.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="glass-card p-4 h-100 border-start border-3 border-danger">
+            <span class="text-danger fw-bold">2024 - 2025</span>
+            <h4 class="h5 mt-2 text-light">Asistente de Soporte Técnico</h4>
+            <p class="text-muted small">Soluciones Tecnológicas</p>
+            <p class="card-text text-muted">Mantenimiento predictivo de hardware, configuración de redes locales y resolución de fallos de boot en Windows.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="glass-card p-4 h-100 border-start border-3 border-success">
+            <span class="text-success fw-bold">2023 - 2024</span>
+            <h4 class="h5 mt-2 text-light">Pasante en Desarrollo de Software</h4>
+            <p class="text-muted small">Academia Tecnológica</p>
+            <p class="card-text text-muted">Colaboración en la maquetación de componentes responsivos HTML5/CSS3 y apoyo en pruebas unitarias.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos" class="py-5">
+    <div class="container">
+      <h2 class="section-title h3">Videos Destacados</h2>
+      <div class="row g-4 mt-2">
+        <div class="col-md-4">
+          <div class="glass-card p-3">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video 1" allowfullscreen></iframe>
+            </div>
+            <h5 class="h6 mt-3 text-info mb-1">Introducción a la Inteligencia Artificial</h5>
+            <small class="text-muted">Análisis de modelos del lenguaje y flujo de trabajo.</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="glass-card p-3">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video 2" allowfullscreen></iframe>
+            </div>
+            <h5 class="h6 mt-3 text-info mb-1">Animación Matrix Canvas con JS</h5>
+            <small class="text-muted">Tutorial técnico del renderizado dinámico paso a paso.</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="glass-card p-3">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video 3" allowfullscreen></iframe>
+            </div>
+            <h5 class="h6 mt-3 text-info mb-1">Despliegue Continuo en GitHub Pages</h5>
+            <small class="text-muted">Guía completa de configuración de repositorios públicos.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="glass-card p-4 p-md-5">
+            <h2 class="section-title h3 mb-4">Transmisión de Mensaje // Contacto</h2>
+            <form id="contact-form">
+              <div class="mb-3">
+                <label for="name" class="form-label text-info">Nombre Completo</label>
+                <input type="text" class="form-control bg-dark text-light border-secondary" id="name" placeholder="Tu Nombre o Empresa" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-info">Correo Electrónico</label>
+                <input type="email" class="form-control bg-dark text-light border-secondary" id="email" placeholder="nombre@dominio.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label text-info">Mensaje Encriptado</label>
+                <textarea class="form-control bg-dark text-light border-secondary" id="message" rows="4" placeholder="Escribe aquí los detalles del proyecto..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-cyber-primary w-100 py-3 mt-2">
+                <i class="bi bi-send me-2"></i>Enviar Transmisión
+              </button>
+            </form>
+            <div id="form-alert" class="alert alert-info mt-3 d-none" role="alert">
+              ¡Transmisión enviada con éxito! Jerolin Montero responderá a la brevedad.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-4 text-center text-muted">
+    <div class="container">
+      <div class="d-flex justify-content-center gap-3 mb-3">
+        <a href="https://www.linkedin.com/in/jerolin-montero-ab7452420/?isSelfProfile=true" target="_blank" class="social-icon-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.youtube.com/@JerolinMontero-g9r" target="_blank" class="social-icon-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
+        <a href="https://github.com/jerolinmonterom-glitch" target="_blank" class="social-icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://wa.me/18498620122" target="_blank" class="social-icon-btn" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.instagram.com/stei_mm?vrfl=ZThzMHNtcHJxNmEy&utm_source=qr" target="_blank" class="social-icon-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+      </div>
+      <p class="mb-1">© 2026 <strong>Jerolin Montero (Matrícula 2024-8034)</strong>. Todos los derechos reservados.</p>
+      <p class="small text-secondary mb-0">Diseñado con Estética Cyberpunk, HTML5, CSS3, Bootstrap 5 &amp; Inteligencia Artificial.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+    const alphabet = katakana + latin;
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    let rainDrops = Array(columns).fill(1);
+    function drawMatrix() {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      ctx.fillStyle = isDark ? 'rgba(3, 7, 18, 0.08)' : 'rgba(240, 244, 248, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = isDark ? '#00ff66' : '#007799';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 33);
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-sun-fill';
+      } else {
+        themeIcon.className = 'bi bi-moon-stars-fill';
+      }
+    }
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const filterValue = button.getAttribute('data-filter');
+        projectItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    const contactForm = document.getElementById('contact-form');
+    const formAlert = document.getElementById('form-alert');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formAlert.classList.remove('d-none');
+      contactForm.reset();
+      setTimeout(() => {
+        formAlert.classList.add('d-none');
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
