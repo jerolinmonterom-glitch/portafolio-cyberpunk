@@ -20,9 +20,8 @@ Diseñar, personalizar y desplegar un portafolio profesional responsivo que cump
 
 ## 🚀 Enlaces Oficiales
 
-- 💻 **Repositorio Público en GitHub:** [https://github.com/jerolinmonterom-glitch/portafolio-ciberpunk](https://github.com/jerolinmonterom-glitch/portafolio-ciberpunk)
-- 🌐 **Despliegue Web en GitHub Pages:** [https://jerolinmonterom-glitch.github.io/portafolio-ciberpunk/](https://jerolinmonterom-glitch.github.io/portafolio-ciberpunk/)
-
+- 💻 **Repositorio Público en GitHub:** [(https://github.com/jerolinmonterom-glitch/portafolio-cyberpunk)]
+- 🌐 **Despliegue Web en GitHub Pages:** [(https://jerolinmonterom-glitch.github.io/portafolio-cyberpunk/)
 ---
 
 ## 🛠️ Tecnologías e Integraciones
